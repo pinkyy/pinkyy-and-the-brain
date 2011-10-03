@@ -17,6 +17,11 @@ int main(int argc, char** argv) {
 	//Enter the main event loop.
 	SDL_Event event;
 	bool keepRunning=true;
+		SDL_Rect destination;
+		destination.x = 100;
+		destination.y = 100;
+		destination.w = 96;
+		destination.h = 96;
 	while (keepRunning) {
 		
 		//Check whether there is an event in the queue that needs processing and do so.
@@ -35,12 +40,9 @@ int main(int argc, char** argv) {
 		source.w = 96;
 		source.h = 96;
 		
-		SDL_Rect destination;
-		destination.x = 100;
-		destination.y = 100;
-		destination.w = 96;
-		destination.h = 96;
-		
+		destination.x ++;
+
+		SDL_FillRect(screen, NULL, 0);
 		SDL_BlitSurface(test, &source, screen, &destination);
 		
 		//Flip the buffers so whatever we've just drawn gets visible.
