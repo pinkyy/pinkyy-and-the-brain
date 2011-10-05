@@ -11,6 +11,7 @@ endif (APPLE)
 # Find all the source files
 set(sources
 	main.cpp
+	world.cpp
 )
 
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL/SDL.h>
+#include "world.h"
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -11,17 +12,14 @@ int main(int argc, char** argv) {
 	//keep the SDL_Surface it returns around so we may draw stuff on it.
 	SDL_Surface * screen = SDL_SetVideoMode(800, 600, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	
+	World * world = new World;
+	
 	//Load the test tile.
 	SDL_Surface * test = SDL_LoadBMP("./data/test.bmp");
 	
 	//Enter the main event loop.
 	SDL_Event event;
-	bool keepRunning=true;
-		SDL_Rect destination;
-		destination.x = 100;
-		destination.y = 100;
-		destination.w = 96;
-		destination.h = 96;
+	bool keepRunning = true;
 	while (keepRunning) {
 		
 		//Check whether there is an event in the queue that needs processing and do so.
@@ -40,9 +38,14 @@ int main(int argc, char** argv) {
 		source.w = 96;
 		source.h = 96;
 		
-		destination.x ++;
-
-		SDL_FillRect(screen, NULL, 0);
+		SDL_Rect destination;
+		destination.x = 100;
+		destination.y = 100;
+		destination.w = 96;
+		destination.h = 96;
+		
+		world->draw();
+		
 		SDL_BlitSurface(test, &source, screen, &destination);
 		
 		//Flip the buffers so whatever we've just drawn gets visible.
