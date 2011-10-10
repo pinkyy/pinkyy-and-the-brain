@@ -3,19 +3,16 @@ project(pbp)
 cmake_minimum_required(VERSION 2.6)
 
 
-# Platform dependent stuff
+# Platform dependent stuff.
 if (APPLE)
 	add_subdirectory(macosx)
 endif (APPLE)
 
-# Find all the source files
-set(sources
-	main.cpp
-	world.cpp
-)
+# Gather all the CPP source files.
+file(GLOB_RECURSE sources RELATIVE ${CMAKE_SOURCE_DIR} *.cpp)
 
 
-# Declare the executable
+# Declare the executable.
 if (APPLE)
 	add_executable(pbp MACOSX_BUNDLE ${sources})
 	target_link_libraries(pbp SDLMain)
