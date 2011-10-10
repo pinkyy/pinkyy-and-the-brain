@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL/SDL.h>
 #include "world.h"
+#include "engine/net/packet.h"
 using namespace std;
 
 int main(int argc, char** argv) {
