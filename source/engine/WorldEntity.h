@@ -3,7 +3,9 @@
 class WorldEntity
 {
 	private:
-		double x, y;
+		double2 pos;
 	public:
-		virtual ~WorldEntity(void);	
-}
+		virtual ~WorldEntity(void);
+		virtual encode(Coder* coder);
+		virtual decode(Coder* coder);
+};
