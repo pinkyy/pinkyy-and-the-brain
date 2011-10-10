@@ -1,7 +1,9 @@
 #include <iostream>
 #include <SDL/SDL.h>
-#include "world.h"
+#include "World.h"
+
 using namespace std;
+
 
 int main(int argc, char** argv) {
 	
