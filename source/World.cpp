@@ -3,7 +3,8 @@
 
 
 void World::draw() {
-	std::cout << "Schlück Bitch!!\n";
+	for (int i = 0; i < entities.size(); i++)
+		entities[i]->draw(screen);
 }
 
 
