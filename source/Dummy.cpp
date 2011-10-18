@@ -13,7 +13,7 @@ Dummy::~Dummy() {
 	std::cout << "iDied\n";
 }
 
-Dummy::advance(double dt)
+void Dummy::advance(double dt)
 {
 	pos.x += v.x * dt;
 	pos.y += 20.0 - 10.0 * sin(pos.x);

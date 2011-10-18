@@ -6,7 +6,7 @@
 
 class WorldEntity
 {
-	private:
+	protected:
 		double2 pos;
 	public:
 		virtual ~WorldEntity();
