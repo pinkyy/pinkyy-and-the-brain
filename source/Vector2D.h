@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <sstream>
 
 
 template <typename T> class Vector2D
@@ -9,8 +10,8 @@ public:
 	T y;
 	
 	//Description
-	string description() const {
-		stringstream s;
+	std::string description() const {
+		std::stringstream s;
 		s << "(" << x << ", " << y << ")";
 		return s.str();
 	}

@@ -1,4 +1,7 @@
 #pragma once
+#include "Vector2D.h"
+#include "Coder.h"
+
 
 class WorldEntity
 {
@@ -6,7 +9,7 @@ class WorldEntity
 		double2 pos;
 	public:
 		virtual ~WorldEntity(void);
-		virtual encode(Coder* coder);
-		virtual decode(Coder* coder);
+		virtual void encode(Coder & coder);
+		virtual void decode(Coder & coder);
 		virtual void draw(SDL_Surface * screen);
 };
