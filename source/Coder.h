@@ -1,11 +1,13 @@
 #pragma once
+#include <cmath>
+
 
 class Coder
 {
 	private:
 		int length;
-		uint8_t* data;
+		//uint8_t* data;
 	public:
-		Coder(int length);	//allocate mem
-		~Coder(void);	//free mem
+		Coder();
+		~Coder();
 };

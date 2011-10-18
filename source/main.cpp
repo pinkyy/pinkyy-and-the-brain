@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include "World.h"
 #include "engine/net/packet.h"
+#include "Dummy.h"
 
 using namespace std;
 
@@ -16,6 +17,10 @@ int main(int argc, char** argv) {
 	SDL_Surface * screen = SDL_SetVideoMode(800, 600, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	
 	World * world = new World;
+	world->screen = screen;
+	
+	Dummy * dummy = new Dummy;
+	world->entities.push_back(dummy);
 	
 	//Load the test tile.
 	SDL_Surface * test = SDL_LoadBMP("./data/test.bmp");

@@ -1,11 +1,11 @@
 #pragma once
+#include "WorldEntity.h"
+
 
 class Dummy : public WorldEntity
 {
-	private:
-		int cupSize;
 	public:
-		Dummy(int cupSize);
-		~Dummy(SDL_Surface* screen);
-		void draw();
+		Dummy();
+		~Dummy();
+		void draw(SDL_Surface* screen);
 };
