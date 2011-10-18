@@ -8,4 +8,5 @@ class World {
 	SDL_Surface * screen;
 	std::vector<WorldEntity *> entities;
 	void draw();
+	void advance(double dt);
 };

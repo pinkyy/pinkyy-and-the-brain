@@ -16,7 +16,7 @@ Dummy::~Dummy() {
 void Dummy::advance(double dt)
 {
 	pos.x += v.x * dt;
-	pos.y += 20.0 - 10.0 * sin(pos.x);
+	pos.y = 20.0 - 10.0 * sin(pos.x);
 }
 
 void Dummy::draw(SDL_Surface* screen) {

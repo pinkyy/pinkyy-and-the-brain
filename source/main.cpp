@@ -28,7 +28,23 @@ int main(int argc, char** argv) {
 	//Enter the main event loop.
 	SDL_Event event;
 	bool keepRunning = true;
+	int previousFrame = 0;
 	while (keepRunning) {
+		
+		//perform time measurment.
+		int now, msdt;
+		do {
+			now = SDL_GetTicks();
+			msdt = now - previousFrame;
+		} while (msdt == 0);
+		previousFrame = now;
+		double dt = (double)msdt / 1000;
+		if (dt > 0.1) dt = 0.1;
+		
+		//Show some debuggin information in the window title bar.
+		char title[512];
+		snprintf(title, 512, "Pinkyy and the Brain | %3.0fHz", 1/dt);
+		SDL_WM_SetCaption(title, NULL);
 		
 		//Check whether there is an event in the queue that needs processing and do so.
 		if (SDL_PollEvent(&event)) {
@@ -38,6 +54,8 @@ int main(int argc, char** argv) {
 			if (event.type == SDL_QUIT)
 				keepRunning = false;
 		}
+		
+		
 		
 		//Draw the test sprite.
 		SDL_Rect source;
@@ -52,6 +70,11 @@ int main(int argc, char** argv) {
 		destination.w = 96;
 		destination.h = 96;
 		
+		//clear screen.
+		SDL_FillRect(screen, NULL, 0);
+		
+		//animate and draw world.
+		world->advance(dt);
 		world->draw();
 		
 		SDL_BlitSurface(test, &source, screen, &destination);
