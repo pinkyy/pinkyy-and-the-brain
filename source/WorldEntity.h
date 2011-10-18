@@ -13,5 +13,5 @@ class WorldEntity
 		virtual void encode(Coder & coder);
 		virtual void decode(Coder & coder);
 		virtual void draw(SDL_Surface * screen);
-		virtual void advance(double dt):
+		virtual void advance(double dt) {}
 };
