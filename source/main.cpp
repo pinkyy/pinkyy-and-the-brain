@@ -3,6 +3,7 @@
 #include "World.h"
 #include "engine/net/packet.h"
 #include "Dummy.h"
+#include "DummyCounter.h"
 
 using namespace std;
 
@@ -22,6 +23,9 @@ int main(int argc, char** argv) {
 	Dummy * dummy = new Dummy;
 	world->entities.push_back(dummy);
 	
+	DummyCounter * dummyCounter = new DummyCounter;
+	world->entities.push_back(dummyCounter);
+	
 	//Load the test tile.
 	SDL_Surface * test = SDL_LoadBMP("./data/test.bmp");
 	
@@ -29,9 +33,13 @@ int main(int argc, char** argv) {
 	SDL_Event event;
 	bool keepRunning = true;
 	int previousFrame = 0;
+	double dt_damped = 0;
 	while (keepRunning) {
 		
-		//perform time measurment.
+		//Perform time measurement. The ticks returned by SDL are in
+		//milliseconds. In case of a frame drawn quicker than 1ms, we
+		//have to block the drawing in a loop and keep measuring the
+		//time until we are able to register a change in ticks.
 		int now, msdt;
 		do {
 			now = SDL_GetTicks();
@@ -39,11 +47,18 @@ int main(int argc, char** argv) {
 		} while (msdt == 0);
 		previousFrame = now;
 		double dt = (double)msdt / 1000;
+		
+		//In order to prevent the animation stuff to distabilize, we fix
+		//the highest time step (i.e. the slowest framerate) at 100ms.
 		if (dt > 0.1) dt = 0.1;
 		
-		//Show some debuggin information in the window title bar.
+		
+		//Show the current framerate in the window's title bar. In order
+		//to make the framerate more legible, we damp the actual dt to
+		//prevent quick changes.
+		dt_damped = (dt_damped * (1/dt*5) + dt) / (1/dt*5+1);
 		char title[512];
-		snprintf(title, 512, "Pinkyy and the Brain | %3.0fHz", 1/dt);
+		snprintf(title, 512, "Pinkyy and the Brain | %3.0fHz", 1 / dt_damped);
 		SDL_WM_SetCaption(title, NULL);
 		
 		//Check whether there is an event in the queue that needs processing and do so.
@@ -55,7 +70,14 @@ int main(int argc, char** argv) {
 				keepRunning = false;
 		}
 		
+		//Clear the screen by painting everything black.
+		SDL_FillRect(screen, NULL, 0);
 		
+		//Animate the world.
+		world->advance(dt);
+		
+		//Draw the world.
+		world->draw();
 		
 		//Draw the test sprite.
 		SDL_Rect source;
@@ -69,13 +91,6 @@ int main(int argc, char** argv) {
 		destination.y = 100;
 		destination.w = 96;
 		destination.h = 96;
-		
-		//clear screen.
-		SDL_FillRect(screen, NULL, 0);
-		
-		//animate and draw world.
-		world->advance(dt);
-		world->draw();
 		
 		SDL_BlitSurface(test, &source, screen, &destination);
 		
